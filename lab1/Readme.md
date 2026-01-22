@@ -176,12 +176,12 @@ docker-compose logs -f
 
 **Результат:** Zookeeper успешно запустился, одна из нод PostgreSQL стала лидером.
 
-![Логи запуска кластера - postgresql0 стал лидером](./lab1/images/leader.png)
+![Логи запуска кластера - postgresql0 стал лидером](./images/leader.png)
 
 
 А postgres1 - secondary
 
-![Логи запуска кластера - postgresql1](./lab1/images/slave.png)
+![Логи запуска кластера - postgresql1](./images/slave.png)
 
 **Ответ на вопрос о пересборке образа:**
 - При обычном `docker-compose up` образ НЕ будет пересобран
@@ -219,7 +219,7 @@ SELECT * FROM users;
 
 ### Шаг 3. Попытка записи на slave
 
-![Ошибка при попытке записи на slave](./lab1/images/forbidden.png)
+![Ошибка при попытке записи на slave](./images/forbidden.png)
 
 Получена ошибка, так как slave-нода работает в режиме read-only
 
@@ -288,7 +288,7 @@ docker-compose up -d --build
 
 Проверка работы репликации через entrypoint:
 
-![Успешная вставка через entrypoint](./lab1/images/success.png)
+![Успешная вставка через entrypoint](./images/success.png)
 
 **Результат:** Подключение успешно установлено, HAProxy автоматически перенаправляет запросы на мастер-ноду.
 
@@ -305,7 +305,7 @@ docker stop pg-master
 
 #### Шаг 2. Проверка работоспособности после failover
 
-![Успешная вставка после остановки мастера](./lab1/images/success2.png)
+![Успешная вставка после остановки мастера](./images/success2.png)
 
 **Результат:** Запись успешно выполнена. Новый мастер (бывший slave) принимает запросы на чтение и запись.
 
