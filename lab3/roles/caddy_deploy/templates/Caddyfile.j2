@@ -1,0 +1,15 @@
+{{ domain_name }} {
+    root * /usr/share/caddy
+    file_server
+
+    header {
+        X-Custom-Header "Hello from Ansible Caddy"
+    }
+
+    log {
+        output file {{ log.file }}
+        format json
+        level {{ log.level }}
+    }
+}
+

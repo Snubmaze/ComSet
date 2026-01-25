@@ -1,0 +1,46 @@
+---
+- name: Install prerequisites
+  apt:
+    pkg:
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+      - curl
+    state: present
+    update_cache: yes
+
+- name: Add key for Caddy repo
+  apt_key:
+    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+    state: present
+    keyring: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+
+- name: Add Caddy repo
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/caddy-stable-archive-keyring.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+    state: present
+    filename: caddy-stable
+
+- name: Install Caddy
+  apt:
+    name: caddy
+    state: present
+    update_cache: yes
+
+- name: Create index.html
+  copy:
+    dest: /usr/share/caddy/index.html
+    content: "<h1>Hello world from Caddy on localhost!</h1>"
+    owner: www-data
+    group: www-data
+    mode: '0644'
+
+- name: Create Caddy config from template
+  template:
+    src: templates/Caddyfile.j2
+    dest: /etc/caddy/Caddyfile
+
+- name: Reload Caddy service
+  service:
+    name: caddy
+    state: reloaded

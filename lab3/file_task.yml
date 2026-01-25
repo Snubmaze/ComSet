@@ -1,0 +1,21 @@
+---
+- name: Create, modify and delete file
+  hosts: my_servers
+  connection: local
+
+  tasks:
+    - name: Create file
+      copy:
+        dest: "{{ ansible_env.HOME }}/test.txt"
+        content: "Initial content"
+
+    - name: Modify file content
+      copy:
+        dest: "{{ ansible_env.HOME }}/test.txt"
+        content: "Modified content"
+
+    - name: Delete file
+      file:
+        path: "{{ ansible_env.HOME }}/test.txt"
+        state: absent
+

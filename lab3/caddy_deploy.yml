@@ -1,0 +1,7 @@
+---
+- name: Deploy and configure Caddy on localhost
+  hosts: my_servers
+  connection: local
+  become: yes  
+  roles:
+    - caddy_deploy
